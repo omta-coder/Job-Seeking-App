@@ -4,6 +4,7 @@ import cors from 'cors'
 import cookieParser from "cookie-parser"
 import fileUpload from "express-fileupload";
 import mongoose from "mongoose";
+import { errorMiddleware } from "./middlewares/error.js";
 
 mongoose.connect(process.env.MONGODB)
 .then(()=>{
@@ -28,5 +29,8 @@ app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp',
 }))
+
+
+app.use(errorMiddleware)
 
 export default app;
