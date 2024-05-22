@@ -5,6 +5,9 @@ import cookieParser from "cookie-parser"
 import fileUpload from "express-fileupload";
 import mongoose from "mongoose";
 import { errorMiddleware } from "./middlewares/error.js";
+import userRoutes from "./routes/userRoute.js"
+import applicationRoutes from "./routes/applicationRoute.js"
+import jobRoutes from "./routes/jobRoute.js"
 
 mongoose.connect(process.env.MONGODB)
 .then(()=>{
@@ -29,6 +32,10 @@ app.use(fileUpload({
     useTempFiles: true,
     tempFileDir: '/tmp',
 }))
+
+app.use("/api/v1/user",userRoutes);
+app.use("/api/v1/application",applicationRoutes);
+app.use("/api/v1/job",jobRoutes);
 
 
 app.use(errorMiddleware)
