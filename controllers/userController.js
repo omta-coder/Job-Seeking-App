@@ -17,3 +17,21 @@ export const register = catchAsyncError(async(req,res,next)=>{
     sendToken(user,201,res,"User Registered Successfully!")
 })
 
+export const login = catchAsyncError(async(req,res,next)=>{
+    const {email,password,role} = req.body;
+    if(!email || !password || !role){
+        return next(new ErrorHandler("Please fill all the fields",400));
+    }
+    const user = await User.findOne({email});
+    if(!user){
+        return next(new ErrorHandler("Invalid Credentials",401));
+    }
+    const isPasswordMatched = await user.comparePassword(password);
+    if(!isPasswordMatched){
+        return next(new ErrorHandler("Invalid Credentials",401));
+    }
+    if(user.role!== role){
+        return next(new ErrorHandler("Invalid Credentials",401));
+    }
+    sendToken(user,200,res,"Login Successfully!")
+})
