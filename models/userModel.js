@@ -21,6 +21,7 @@ const userSchema = new mongoose.Schema({
         required: [true, "Please enter your password!"],
         minLength: [6, "Password must be at least 6 characters!"],
         maxLength: [30, "Password cannot exceed 30 Characters!"],
+        select:false
     },
     phone:{
         type:Number,

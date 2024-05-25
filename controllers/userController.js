@@ -22,7 +22,7 @@ export const login = catchAsyncError(async(req,res,next)=>{
     if(!email || !password || !role){
         return next(new ErrorHandler("Please fill all the fields",400));
     }
-    const user = await User.findOne({email});
+    const user = await User.findOne({email}).select("+password");
     if(!user){
         return next(new ErrorHandler("Invalid Credentials",401));
     }
