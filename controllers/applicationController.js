@@ -2,6 +2,7 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Application } from "../models/applicationModel.js";
 
+export const postApplication = catchAsyncError(async(req,res,next)=>{})
 
 export const employerGetAllApplications = catchAsyncError(async(req,res,next)=>{
     const {role} = req.user;
