@@ -2,7 +2,15 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Application } from "../models/applicationModel.js";
 
-export const postApplication = catchAsyncError(async(req,res,next)=>{})
+export const postApplication = catchAsyncError(async(req,res,next)=>{
+    const {role} = req.user;
+    if(role === "Employer"){
+        return next(new ErrorHandler("Employer not allowed to access this resource",400))
+    };
+    if(req.files || Object.keys(req.files).length === 0){
+        return next(new ErrorHandler("Resume File Required!",400));
+    }
+})
 
 export const employerGetAllApplications = catchAsyncError(async(req,res,next)=>{
     const {role} = req.user;
