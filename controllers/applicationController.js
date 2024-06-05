@@ -1,6 +1,7 @@
 import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Application } from "../models/applicationModel.js";
+import cloudinary from "cloudinary";
 
 export const postApplication = catchAsyncError(async(req,res,next)=>{
     const {role} = req.user;
@@ -9,6 +10,16 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
     };
     if(req.files || Object.keys(req.files).length === 0){
         return next(new ErrorHandler("Resume File Required!",400));
+    }
+    const {resume} = req.files;
+    const allowedFormats = ["image/png","image/jpeg","image/webp"];
+    if(!allowedFormats.includes(resume.mimetype)){
+        return next(new ErrorHandler("Invalid File Type",400))
+    }
+    const clodinaryResponse = await cloudinary.uploader.upload(resume.tempFilePath);
+    if(!clodinaryResponse || clodinaryResponse.error){
+        console.error("cloudinary Error :", clodinaryResponse.error || "Unknown Cloudinary Error");
+        return next(new ErrorHandler("Failed to upload Resume to Cloudinary",500))
     }
 })
 
