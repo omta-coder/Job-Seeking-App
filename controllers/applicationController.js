@@ -48,7 +48,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
     const application = await Application.create({
         name,email,coverLetter,phone,address,applicantID,employerID,resume:{
             public_id:clodinaryResponse.public_id,
-            url:clodinaryResponse.secure_url,
+            url: clodinaryResponse.secure_url,
         },
     });
     res.status(200).json({
