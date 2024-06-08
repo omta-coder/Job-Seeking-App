@@ -2,6 +2,8 @@ import { catchAsyncError } from "../middlewares/catchAsyncError.js";
 import ErrorHandler from "../middlewares/error.js";
 import { Application } from "../models/applicationModel.js";
 import cloudinary from "cloudinary";
+import { Job } from "../models/jobModel.js";
+
 
 export const postApplication = catchAsyncError(async(req,res,next)=>{
     const {role} = req.user;
@@ -21,6 +23,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
         console.error("cloudinary Error :", clodinaryResponse.error || "Unknown Cloudinary Error");
         return next(new ErrorHandler("Failed to upload Resume to Cloudinary",500))
     }
+    
     const {name,email,coverLetter,phone,address,jobId} =req.body;
     const applicantID = {
         user:req.user._id,
@@ -44,8 +47,8 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
 
     const application = await Application.create({
         name,email,coverLetter,phone,address,applicantID,employerID,resume:{
-            public_id : clodinaryResponse.public_id,
-            url : clodinaryResponse.secure_url
+            public_id:clodinaryResponse.public_id,
+            url:clodinaryResponse.secure_url,
         },
     });
     res.status(200).json({
@@ -53,6 +56,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
         message:"Application Submitted",
         application
     });
+   
 })
 
 export const employerGetAllApplications = catchAsyncError(async(req,res,next)=>{
