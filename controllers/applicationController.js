@@ -10,17 +10,20 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
     if(role === "Employer"){
         return next(new ErrorHandler("Employer not allowed to access this resource",400))
     };
-    if(req.files || Object.keys(req.files).length === 0){
-        return next(new ErrorHandler("Resume File Required!",400));
-    }
-    const {resume} = req.files;
-    const allowedFormats = ["image/png","image/jpeg","image/webp"];
-    if(!allowedFormats.includes(resume.mimetype)){
-        return next(new ErrorHandler("Invalid File Type",400))
-    }
-    const clodinaryResponse = await cloudinary.uploader.upload(resume.tempFilePath);
-    if(!clodinaryResponse || clodinaryResponse.error){
-        console.error("cloudinary Error :", clodinaryResponse.error || "Unknown Cloudinary Error");
+    if (!req.files || Object.keys(req.files).length === 0) {
+        return next(new ErrorHandler("Resume File Required!", 400));
+      }
+      const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
+      if (!allowedFormats.includes(resume.mimetype)) {
+        return next(
+          new ErrorHandler("Invalid file type. Please upload a PNG file.", 400)
+        );
+      }
+      const cloudinaryResponse = await cloudinary.uploader.upload(
+        resume.tempFilePath
+      );
+    if(!cloudinaryResponse|| cloudinaryResponse.error){
+        console.error("cloudinary Error :", cloudinaryResponse.error || "Unknown Cloudinary Error");
         return next(new ErrorHandler("Failed to upload Resume to Cloudinary",500))
     }
     
@@ -47,8 +50,8 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
 
     const application = await Application.create({
         name,email,coverLetter,phone,address,applicantID,employerID,resume:{
-            public_id:clodinaryResponse.public_id,
-            url: clodinaryResponse.secure_url,
+            public_id:cloudinaryResponse.public_id,
+            url: cloudinaryResponse.secure_url,
         },
     });
     res.status(200).json({
