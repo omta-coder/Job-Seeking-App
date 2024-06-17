@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom/client'
 import App from './App.jsx'
 import './index.css'
 
-export const contet = createContext({
+export const Context = createContext({
   isAuthorized:false
 })
 
@@ -11,9 +11,9 @@ const AppWrapper = ()=>{
   const [isAuthorized, setIsAuthorized] = useState(false)
   const [user, setUser] = useState({});
   return (
-    <contet.Provider value={{isAuthorized, setIsAuthorized, user, setUser}}>
+    <Context.Provider value={{isAuthorized, setIsAuthorized, user, setUser}}>
       <App/>
-    </contet.Provider>
+    </Context.Provider>
   )
 }
 
