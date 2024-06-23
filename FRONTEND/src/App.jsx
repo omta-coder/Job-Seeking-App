@@ -15,6 +15,8 @@ import MyJobs from './component/Job/MyJobs';
 import Jobs from './component/Job/Jobs';
 import JobDetails from './component/Job/JobDetails';
 import Application from './component/Application/Application';
+import axios from "axios";
+import {Toaster} from "react-hot-toast";
 
 
 const App = () => {
@@ -27,6 +29,12 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register/>} />
+      <Route path='/job/getall' element={Jobs}/>
+      <Route path='/job/:id' element={JobDetails}/>
+      <Route path='/application/:id' element={Application}/>
+      <Route path='/application/me' element={MyApplications}/>
+      <Route path='/job/post' element={PostJob}/>
+      <Route path='/job/me' element={MyJobs}/>
       <Route path="*" element={<NotFound/>} />
     </Routes>
     <Footer/>
