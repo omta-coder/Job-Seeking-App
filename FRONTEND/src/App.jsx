@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import './App.css'
 import { Context } from './main'
 import { BrowserRouter, Route, Routes } from "react-router-dom";
@@ -20,7 +20,22 @@ import {Toaster} from "react-hot-toast";
 
 
 const App = () => {
-  const {isAuthorized,setIsAuthorized,setUser} = useContext(Context)
+  const {isAuthorized,setIsAuthorized,setUser} = useContext(Context);
+
+  useEffect(() => {
+    const fetchUser = async()=>{
+   try {
+    const res = await axios.get("",{withCredentials:true})
+    setUser(res.data.user);
+    setIsAuthorized(true);
+   } catch (error) {
+    setIsAuthorized(false);
+   }
+  }
+   fetchUser();
+  }, [isAuthorized])
+  
+
   return (
     <>
     <BrowserRouter>
@@ -38,6 +53,7 @@ const App = () => {
       <Route path="*" element={<NotFound/>} />
     </Routes>
     <Footer/>
+    <Toaster/>
     </BrowserRouter>
     </>
   )
