@@ -13,9 +13,10 @@ import { FaPhoneFlip } from "react-icons/fa6";
 
 const Register = () => {
   const [email, setEmail] = useState("");
-  const [name, setName] = useState("")
-  const [password, setPassword] = useState("")
-  const [role, setRole] = useState("")
+  const [name, setName] = useState("");
+  const [phone, setPhone] = useState("");
+  const [password, setPassword] = useState("");
+  const [role, setRole] = useState("");
   const { isAuthorized, setIsAuthorized, user, setUser } = useContext(Context);
 
   const handleRegister = async()=>{
