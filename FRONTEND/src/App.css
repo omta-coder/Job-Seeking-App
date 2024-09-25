@@ -449,7 +449,7 @@ p {
 }
 .categories .banner .card {
   width: 320px;
-  background: red;
+  /* background: red; */
   padding: 20px;
   display: flex;
   align-items: center;
@@ -676,7 +676,7 @@ p {
 }
 .jobDetail .container .banner {
   width: 100%;
-  min-height: 767px;
+  /* min-height: 767px; */
   padding: 50px 0;
   display: flex;
   flex-direction: column;

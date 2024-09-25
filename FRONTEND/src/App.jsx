@@ -44,12 +44,12 @@ const App = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register/>} />
-      <Route path='/job/getall' element={Jobs}/>
-      <Route path='/job/:id' element={JobDetails}/>
-      <Route path='/application/:id' element={Application}/>
-      <Route path='/application/me' element={MyApplications}/>
-      <Route path='/job/post' element={PostJob}/>
-      <Route path='/job/me' element={MyJobs}/>
+      <Route path='/job/getall' element={<Jobs/>}/>
+      <Route path='/job/:id' element={<JobDetails/>}/>
+      <Route path='/application/:id' element={<Application/>}/>
+      <Route path='/application/me' element={<MyApplications/>}/>
+      <Route path='/job/post' element={<PostJob/>}/>
+      <Route path='/job/me' element={<MyJobs/>}/>
       <Route path="*" element={<NotFound/>} />
     </Routes>
     <Footer/>
