@@ -88,7 +88,7 @@ const Login = () => {
           <button type="submit" onClick={handleLogin}>
             Login
           </button>
-          <Link to={"/register"}>Register Now</Link>
+          <p> Don't have an account ?<Link to={"/register"}>Register Now</Link></p>
         </form>
       </div>
       <div className="banner">

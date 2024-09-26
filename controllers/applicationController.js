@@ -13,6 +13,7 @@ export const postApplication = catchAsyncError(async(req,res,next)=>{
     if (!req.files || Object.keys(req.files).length === 0) {
         return next(new ErrorHandler("Resume File Required!", 400));
       }
+      const { resume } = req.files;
       const allowedFormats = ["image/png", "image/jpeg", "image/webp"];
       if (!allowedFormats.includes(resume.mimetype)) {
         return next(
